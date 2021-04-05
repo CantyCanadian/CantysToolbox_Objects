@@ -196,9 +196,9 @@ namespace Canty.Managers
             m_Shakes.Add(target, newShake);
         }
 
-        protected override void Start()
+        protected override void Awake()
         {
-            base.Start();
+            base.Awake();
 
             StartCoroutine(ShakeLoop());
         }
@@ -212,7 +212,7 @@ namespace Canty.Managers
 
             while (true)
             {
-                toRemove.Clear();
+                yield return new WaitUntil(() => m_Shakes.Count > 0);
 
                 foreach (KeyValuePair<GameObject, ShakeInformation> shake in m_Shakes)
                 {
@@ -285,7 +285,7 @@ namespace Canty.Managers
                     m_Shakes.Remove(removed);
                 }
 
-                yield return null;
+                toRemove.Clear();
             }
         }
     }

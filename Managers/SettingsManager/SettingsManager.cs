@@ -452,9 +452,9 @@ namespace Canty.Managers
 
         #endregion
 
-        protected override void Start()
+        protected override void Awake()
         {
-            base.Start();
+            base.Awake();
 
             PopulateResolutionList();
 
