@@ -127,6 +127,11 @@ public class BetterToggle : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
         RefreshUI();
     }
 
+    public void RegisterGroup(BetterToggleGroup group)
+    {
+        m_Group = group;
+    }
+
     private void RefreshUI()
     {
         switch (m_State)

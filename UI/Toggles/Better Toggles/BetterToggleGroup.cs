@@ -47,6 +47,7 @@ namespace Canty
             for (int i = 0; i < m_Toggles.Count; i++)
             {
                 BetterToggle toggle = m_Toggles[i];
+                toggle.RegisterGroup(this);
                 toggle.OnValueChanged.AddListener((b) => { OnValueChangedListener(toggle, b); });
 
                 if (toggle.isInteractable)
