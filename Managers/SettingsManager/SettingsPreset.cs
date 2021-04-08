@@ -1,7 +1,10 @@
 ﻿using Canty;
 using UnityEngine;
-using UnityEditor;
 using Canty.Managers;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 /// <summary>
 /// Easy preset object with the regular Unity-provided settings.
@@ -27,12 +30,14 @@ public class SettingsPreset : ScriptableObject
     public int ShadowNearPlaneOffset = 3;
     public SettingsManager.ShadowCascadeTypes ShadowCascadeType = SettingsManager.ShadowCascadeTypes.FourCascade;
 
-	/// <summary>
-	/// Create a SettingsPreset object.
-	/// </summary>
+#if UNITY_EDITOR
+    /// <summary>
+    /// Create a SettingsPreset object.
+    /// </summary>
     [MenuItem("Assets/Create/Canty/Managers/Settings Preset")]
     public static void CreateAsset()
     {
         EditorUtil.CreateScriptableObject<SettingsPreset>();
     }
+#endif
 }

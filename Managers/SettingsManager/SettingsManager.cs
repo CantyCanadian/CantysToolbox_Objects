@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 namespace Canty.Managers
@@ -23,7 +22,7 @@ namespace Canty.Managers
         [ConditionalField("UsePresetAsDefault")] public string PresetUsedAsDefault;
 
         // Screen
-        [ConditionalField("UsePresetAsDefault", true)] public AspectRatio AspectRatio = AspectRatio.Aspect16by9;
+        [ConditionalField("UsePresetAsDefault", true)] public AspectRatioTypes AspectRatio = AspectRatioTypes.Ratio16by10;
         [ConditionalField("UsePresetAsDefault", true)] public int ResolutionIndex = -1;
         [ConditionalField("UsePresetAsDefault", true)] public bool Fullscreen = true;
         [ConditionalField("UsePresetAsDefault", true)] public int RefreshRate = 60;
@@ -47,14 +46,14 @@ namespace Canty.Managers
         [ConditionalField("UsePresetAsDefault", true)] public ShadowCascadeTypes ShadowCascadeType = ShadowCascadeTypes.FourCascade;
 
         // Other
-        public Dictionary<AspectRatio, Vector2Int[]> ResolutionData { get { return m_ResolutionList; } }
+        public Dictionary<AspectRatioTypes, Vector2Int[]> ResolutionData { get { return m_ResolutionList; } }
 
         #endregion
 
         #region Private Properties
 
         // Screen
-        private UnityEditor.AspectRatio m_CurrentAspectRatio;
+        private AspectRatioTypes m_CurrentAspectRatio;
         private int m_CurrentResolutionIndex;
         private bool m_CurrentlyFullscreen;
         private int m_CurrentRefreshRate;
@@ -78,11 +77,20 @@ namespace Canty.Managers
         private ShadowCascadeTypes m_CurrentShadowCascadeType;
 
         // Other
-        private Dictionary<UnityEditor.AspectRatio, Vector2Int[]> m_ResolutionList = null;
+        private Dictionary<AspectRatioTypes, Vector2Int[]> m_ResolutionList = null;
 
         #endregion
 
         #region Setting Types
+
+        public enum AspectRatioTypes
+        {
+            Ratio4by3,
+            Ratio5by4,
+            Ratio16by10,
+            Ratio16by9,
+            RatioOther
+        }
 
         public enum TextureQualityTypes
         {
@@ -291,7 +299,7 @@ namespace Canty.Managers
                     Vector2Int currentResolution = new Vector2Int(Screen.currentResolution.width, Screen.currentResolution.height);
 
                     bool exit = false;
-                    foreach (KeyValuePair<AspectRatio, Vector2Int[]> aspectRatio in m_ResolutionList)
+                    foreach (KeyValuePair<AspectRatioTypes, Vector2Int[]> aspectRatio in m_ResolutionList)
                     {
                         for (int i = 0; i < aspectRatio.Value.Length; i++)
                         {
@@ -314,7 +322,7 @@ namespace Canty.Managers
                     {
                         // Standard 1080p
                         ResolutionIndex = 2;
-                        AspectRatio = AspectRatio.Aspect16by9;
+                        AspectRatio = AspectRatioTypes.Ratio16by9;
                     }
                 }
                 else
@@ -355,7 +363,7 @@ namespace Canty.Managers
                 Vector2Int currentResolution = new Vector2Int(Screen.currentResolution.width, Screen.currentResolution.height);
 
                 bool exit = false;
-                foreach (KeyValuePair<AspectRatio, Vector2Int[]> aspectRatio in m_ResolutionList)
+                foreach (KeyValuePair<AspectRatioTypes, Vector2Int[]> aspectRatio in m_ResolutionList)
                 {
                     for (int i = 0; i < aspectRatio.Value.Length; i++)
                     {
@@ -378,7 +386,7 @@ namespace Canty.Managers
                 {
                     // Standard 1080p
                     ResolutionIndex = 2;
-                    AspectRatio = AspectRatio.Aspect16by9;
+                    AspectRatio = AspectRatioTypes.Ratio16by9;
                 }
             }
             else
@@ -416,7 +424,7 @@ namespace Canty.Managers
                 return;
             }
 
-            m_ResolutionList = new Dictionary<AspectRatio, Vector2Int[]>();
+            m_ResolutionList = new Dictionary<AspectRatioTypes, Vector2Int[]>();
 
             Vector2Int[] ratio43 =
             {
@@ -445,9 +453,9 @@ namespace Canty.Managers
                 new Vector2Int(2560, 1600)
             };
 
-            m_ResolutionList.Add(UnityEditor.AspectRatio.Aspect4by3, ratio43);
-            m_ResolutionList.Add(UnityEditor.AspectRatio.Aspect16by9, ratio169);
-            m_ResolutionList.Add(UnityEditor.AspectRatio.Aspect16by10, ratio1610);
+            m_ResolutionList.Add(AspectRatioTypes.Ratio4by3, ratio43);
+            m_ResolutionList.Add(AspectRatioTypes.Ratio16by9, ratio169);
+            m_ResolutionList.Add(AspectRatioTypes.Ratio16by10, ratio1610);
         }
 
         #endregion
